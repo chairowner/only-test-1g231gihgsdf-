@@ -23,13 +23,14 @@ const SWrapper = styled.div<{ $accent: string; $accent10: string; $light: string
   text-rendering: auto;
   position: relative;
   cursor: grab;
+  height: 135px;
 
   &:active {
     cursor: grabbing;
   }
 
   .swiper {
-    margin: 0 120px;
+    margin: 0 80px;
   }
 
   .swiper-button-prev,
@@ -63,7 +64,7 @@ export const YearBlockList: FC<YearBlockListProps> = ({ years }) => {
 
   return (
     <SWrapper $accent={accent} $accent10={accent10} $light={light}>
-      <button className="swiper-button-prev" />
+      <button className="swiper-button-prev" id="sl1-sbp" />
       <Swiper
         spaceBetween={80}
         slidesPerView={3}
@@ -71,8 +72,8 @@ export const YearBlockList: FC<YearBlockListProps> = ({ years }) => {
         mousewheel={true}
         keyboard={{ enabled: true }}
         navigation={{
-          prevEl: '.swiper-button-prev',
-          nextEl: '.swiper-button-next',
+          prevEl: '#sl1-sbp',
+          nextEl: '#sl1-sbn',
         }}
         modules={[FreeMode, Mousewheel, Keyboard, Navigation]}
       >
@@ -82,7 +83,7 @@ export const YearBlockList: FC<YearBlockListProps> = ({ years }) => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <button className="swiper-button-next" />
+      <button className="swiper-button-next" id="sl1-sbn" />
     </SWrapper>
   );
 };

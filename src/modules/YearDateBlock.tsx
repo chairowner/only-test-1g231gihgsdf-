@@ -1,24 +1,31 @@
 import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useAppSelector } from '../lib/hooks';
-import { DateCircle, DateYears, YearBlockList } from '../components';
+import { DateCircle, DateSelector, DateYears, YearBlockList } from '../components';
 import { DateYearsInfo, YearInfo } from '../types';
 import { Heading } from '../ui';
 
 const SContainer = styled.div<{ $borderColor: string }>`
-  height: 100%;
+  position: relative;
+  height: 1080px;
   border-left: 1px solid ${(props) => props.$borderColor};
   border-right: 1px solid ${(props) => props.$borderColor};
   margin: 0 160px 0 320px;
-  padding-top: 170px;
-  position: relative;
-`;
-const SDateCircleWrapper = styled.div<{ $primary: string }>`
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+`;
+const SDateCircle = styled.div<{ $primary: string }>`
+  position: absolute;
+  display: flex;
   justify-content: center;
+  align-items: center;
+  width: fit-content;
+  height: fit-content;
+  top: 215px;
 
-  /* &::after,
+  &::after,
   &::before {
     content: '';
     display: block;
@@ -31,8 +38,34 @@ const SDateCircleWrapper = styled.div<{ $primary: string }>`
   }
 
   &::after {
-    width: 100%;
-  } */
+    width: 120vw;
+  }
+`;
+const SDateCircleWrapper = styled.div`
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const SDateSelectorWrapper = styled.div`
+  margin: 31px 80px;
+  width: fit-content;
+`;
+
+const SDates = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 100px;
+`;
+
+const STop = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: start;
+  padding-top: 170px;
 `;
 
 interface YearDateBlockProps {
@@ -60,12 +93,21 @@ export const YearDateBlock: FC<YearDateBlockProps> = ({ initialState }) => {
 
   return (
     <SContainer $borderColor={primary10}>
-      <Heading title="Исторические даты" style={{ position: 'absolute', left: 0, top: '130px' }} />
-      <SDateCircleWrapper $primary={primary10}>
-        <DateYears style={{ position: 'absolute' }} years={years} />
-        <DateCircle dateYears={dateYears} changeDate={changeDate} />
+      <SDateCircleWrapper>
+        <SDateCircle $primary={primary10}>
+          <DateYears style={{ position: 'absolute' }} years={years} />
+          <DateCircle dateYears={dateYears} changeDate={changeDate} />
+        </SDateCircle>
       </SDateCircleWrapper>
-      <YearBlockList years={years} />
+      <STop>
+        <Heading title="Исторические даты" />
+      </STop>
+      <SDates>
+        <SDateSelectorWrapper>
+          <DateSelector dateYears={dateYears} changeDate={changeDate} />
+        </SDateSelectorWrapper>
+        <YearBlockList years={years} />
+      </SDates>
     </SContainer>
   );
 };

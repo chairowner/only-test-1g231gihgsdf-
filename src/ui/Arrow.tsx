@@ -5,9 +5,17 @@ import { useAppSelector } from '../lib/hooks';
 
 interface ArrowProps {
   side: 'left' | 'right';
+  disabled?: boolean;
+  onClick?: () => void;
 }
 
-const SArrow = styled.div<{ $primary: string; $primary50: string; $right?: boolean }>`
+const SArrow = styled.button<{ $primary: string; $primary50: string; $light: string }>`
+  z-index: auto;
+  position: relative;
+  right: auto;
+  left: auto;
+  top: auto;
+  bottom: auto;
   text-rendering: auto;
   color: ${({ $primary }) => $primary};
   width: 50px;
@@ -15,20 +23,34 @@ const SArrow = styled.div<{ $primary: string; $primary50: string; $right?: boole
   border: 1px solid ${({ $primary50 }) => $primary50};
   border-radius: 50%;
   cursor: pointer;
+  transition: background-color 0.1s ease;
+
+  &:hover {
+    background-color: ${({ $light }) => $light};
+  }
+
   &::after {
     font-size: 14px;
     font-weight: bold;
   }
 `;
 
-export const Arrow: FC<ArrowProps> = ({ side }) => {
-  const { primary, primary50 } = useAppSelector((state) => state.theme);
+const getClassName = ({ side, disabled }: ArrowProps): string => {
+  let className = side === 'right' ? 'swiper-button-next' : 'swiper-button-prev';
+  if (disabled) className += ' swiper-button-disabled';
+  return className;
+};
+
+export const Arrow: FC<ArrowProps> = (props) => {
+  const { primary, primary50, light } = useAppSelector((state) => state.theme);
   return (
     <SArrow
-      className="swiper-button-next"
+      className={getClassName(props)}
       $primary={primary}
       $primary50={primary50}
-      $right={side === 'right'}
+      $light={light}
+      disabled={props.disabled}
+      onClick={() => props.onClick()}
     />
   );
 };

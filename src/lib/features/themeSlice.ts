@@ -28,7 +28,7 @@ const initialState: Theme = {
 export const themeSlice = createSlice({
   name: 'theme',
   initialState,
-  reducers: {},
+  reducers: undefined,
 });
 
 export default themeSlice.reducer;

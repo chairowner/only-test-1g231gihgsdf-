@@ -3,28 +3,8 @@ import { DateYearsInfo } from '../types';
 export const initialDataYears: DateYearsInfo[] = [
   {
     selected: false,
-    title: 'Fake Data',
-    day: 1,
-    month: 6,
-    years: [
-      {
-        year: 2002,
-        description: 'dasdasdasdsadsadasdsadas dsadasd asd sad asdsad asd sa',
-      },
-      {
-        year: 2003,
-        description: 'dasdasdasdsadsadasdsadas dsadasd asd sad asdsad asd sa',
-      },
-      {
-        year: 2004,
-        description: 'dasdasdasdsadsadasdsadas dsadasd asd sad asdsad asd sa',
-      },
-    ],
-  },
-  {
-    selected: false,
     title: 'Кино',
-    day: 2,
+    day: 1,
     month: 6,
     years: [
       {
@@ -47,6 +27,42 @@ export const initialDataYears: DateYearsInfo[] = [
       {
         year: 1991,
         description: '"Семейка Аддамс"/The Addams Family, США (реж. Барри Зонненфельд)',
+      },
+    ],
+  },
+  {
+    selected: false,
+    title: 'Наука',
+    day: 2,
+    month: 6,
+    years: [
+      {
+        year: 2015,
+        description:
+          '13 сентября — частное солнечное затмение, видимое в Южной Африке и части Антарктиды',
+      },
+      {
+        year: 2016,
+        description:
+          'Телескоп «Хаббл» обнаружил самую удалённую из всех обнаруженных галактик, получившую обозначение GN-z11',
+      },
+      {
+        year: 2017,
+        description:
+          'Компания Tesla официально представила первый в мире электрический грузовик Tesla Semi',
+      },
+      {
+        year: 2018,
+        description:
+          'Старт космического аппарата Solar Probe Plus, предназначенного для изучения Солнца',
+      },
+      {
+        year: 2019,
+        description: 'Google объявил о создании 53-кубитного квантового компьютера',
+      },
+      {
+        year: 2020,
+        description: 'Корабль Crew Dragon на Землю из первого пилотируемого полёта',
       },
     ],
   },
@@ -101,7 +117,29 @@ export const initialDataYears: DateYearsInfo[] = [
     title: 'Литература',
     day: 5,
     month: 6,
-    years: [],
+    years: [
+      {
+        year: 1987,
+        description: '"Хищник"/Predator, США (реж. Джон Мактирнан)',
+      },
+      {
+        year: 1988,
+        description:
+          '"Кто подставил кролика Роджера"/Who Framed Roger Rabbit, США (реж. Роберт Земекис)',
+      },
+      {
+        year: 1989,
+        description: 'Назад в будущее 2/Back To The Future 2, США (реж. Роберт Земекис)',
+      },
+      {
+        year: 1990,
+        description: '"Крепкий орешек 2"/Die Hard 2, США (реж. Ренни Харлин)',
+      },
+      {
+        year: 1991,
+        description: '"Семейка Аддамс"/The Addams Family, США (реж. Барри Зонненфельд)',
+      },
+    ],
   },
   {
     selected: false,

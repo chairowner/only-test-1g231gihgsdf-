@@ -23,7 +23,7 @@ export const BigYear: FC<BigYearProps> = ({ color, year }) => {
   const ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    if (year === undefined || yearRef.current === year) return;
+    if (year === undefined) return;
 
     const animateObj = { value: yearRef.current ?? 0 };
 
@@ -36,9 +36,7 @@ export const BigYear: FC<BigYearProps> = ({ color, year }) => {
       },
       onComplete: () => {
         yearRef.current = year;
-        if (ref.current != undefined && year === 0) {
-          ref.current.style.display = 'none';
-        }
+        ref.current.style.display = ref.current != undefined && year === 0 ? 'none' : 'block';
       },
       onStart: () => {
         if (ref.current != undefined && ref.current.style.display === 'none') {

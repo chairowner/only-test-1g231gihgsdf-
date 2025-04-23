@@ -3,32 +3,10 @@ import styled from 'styled-components';
 import gsap from 'gsap';
 import { useAppSelector } from '../lib/hooks';
 import { Theme } from '../lib/features';
-import { DateYearsInfo, YearInfo } from '../types';
-import { DateCirclePoint, DateYears } from '../ui';
+import { DateYearsInfo } from '../types';
+import { DateCirclePoint } from '../ui';
 
 const CIRCLE_SIZE: number = 530;
-
-const SWrapper = styled.div<{ $primary: string }>`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &::after,
-  &::before {
-    content: '';
-    display: block;
-    position: absolute;
-    border: 1px solid ${({ $primary }) => $primary};
-  }
-
-  &::before {
-    height: 150vh;
-  }
-
-  &::after {
-    width: 100%;
-  }
-`;
 
 const SMainCircle = styled.div<{ $borderColor: string }>`
   width: ${CIRCLE_SIZE}px;
@@ -58,9 +36,9 @@ const getPosition = (index: number, total: number, radius: number) => {
 export const DateCircle: FC<DateCircleProps> = ({ dateYears, changeDate }) => {
   const indexToPosition: number = dateYears.length - 1;
 
-  const theme: Theme = useAppSelector((state) => state.theme);
+  const { primary20 }: Theme = useAppSelector((state) => state.theme);
   const circleRef = useRef<HTMLDivElement>(null);
-  const pointRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const pointRefs = useRef<HTMLDivElement[]>([]);
 
   const rotateToIndex = (clickedIndex: number) => {
     const clickedAngle: number = getAngle(clickedIndex, dateYears.length);
@@ -88,41 +66,30 @@ export const DateCircle: FC<DateCircleProps> = ({ dateYears, changeDate }) => {
     });
   }, [dateYears]);
 
-  const years: YearInfo[] = dateYears.find((date) => date.selected)?.years;
-
   return (
-    <SWrapper $primary={theme.primary10}>
-      {years && (
-        <DateYears
-          style={{ position: 'absolute' }}
-          first={years[0]?.year}
-          last={years[years.length - 1]?.year}
-        />
-      )}
-      <SMainCircle $borderColor={theme.primary20} ref={circleRef}>
-        {dateYears.map((dateYearInfo: DateYearsInfo, index) => {
-          const { x, y } = getPosition(index, dateYears.length, CIRCLE_SIZE / 2);
-          return (
-            <DateCirclePoint
-              key={index}
-              day={dateYearInfo.day}
-              title={dateYearInfo.title}
-              selected={dateYearInfo.selected}
-              ref={(e) => {
-                pointRefs.current[index] = e;
-              }}
-              onClick={() => {
-                changeDate({ day: dateYearInfo.day });
-              }}
-              style={{
-                position: 'absolute',
-                left: `calc(50% + ${x}px - 28px)`,
-                top: `calc(50% + ${y}px - 28px)`,
-              }}
-            />
-          );
-        })}
-      </SMainCircle>
-    </SWrapper>
+    <SMainCircle $borderColor={primary20} ref={circleRef}>
+      {dateYears.map((dateYearInfo: DateYearsInfo, index) => {
+        const { x, y } = getPosition(index, dateYears.length, CIRCLE_SIZE / 2);
+        return (
+          <DateCirclePoint
+            key={index}
+            day={dateYearInfo.day}
+            title={dateYearInfo.title}
+            selected={dateYearInfo.selected}
+            ref={(e) => {
+              pointRefs.current[index] = e;
+            }}
+            onClick={() => {
+              changeDate({ day: dateYearInfo.day });
+            }}
+            style={{
+              position: 'absolute',
+              left: `calc(50% + ${x}px - 28px)`,
+              top: `calc(50% + ${y}px - 28px)`,
+            }}
+          />
+        );
+      })}
+    </SMainCircle>
   );
 };

@@ -27,6 +27,11 @@ module.exports = {
         test: /\.scss$/,
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+        include: /node_modules/,
+      },
     ],
   },
   resolve: {
@@ -43,6 +48,5 @@ module.exports = {
     historyApiFallback: true,
     port: 3000,
     hot: true,
-    open: false,
   },
 };

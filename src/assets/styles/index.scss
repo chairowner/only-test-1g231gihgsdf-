@@ -1,8 +1,9 @@
-// @use './normalize.min.css';
 @use 'scss-reset/reset';
 @use './fonts.scss';
 
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 

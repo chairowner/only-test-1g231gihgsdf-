@@ -30,6 +30,7 @@ const SPoint = styled.div<{ $p: string }>`
   background-color: ${({ $p }) => $p};
   cursor: pointer;
   transition:
+    border-color 0.4s ease-out,
     background-color 0.4s ease-out,
     width 0.3s ease-in-out,
     height 0.3s ease-in-out;
@@ -39,10 +40,11 @@ const SPoint = styled.div<{ $p: string }>`
     transition: opacity 0.6s ease;
   }
 `;
-const hoverStyles = css<{ $bg: string }>`
+const hoverStyles = css<{ $bg: string; $p50: string }>`
   ${SPoint} {
     width: 56px;
     height: 56px;
+    border-color: ${({ $p50 }) => $p50};
     background-color: ${({ $bg }) => $bg};
 
     ${SDay} {
@@ -50,7 +52,7 @@ const hoverStyles = css<{ $bg: string }>`
     }
   }
 `;
-const SHoverPoint = styled.div<{ $bg: string; $selected?: boolean }>`
+const SHoverPoint = styled.div<{ $bg: string; $p50: string; $selected?: boolean }>`
   position: relative;
   width: 56px;
   height: 56px;
@@ -76,7 +78,7 @@ type DateCirclePointProps = Pick<DateYearsInfo, 'day' | 'title'> & {
 
 export const DateCirclePoint = forwardRef<HTMLDivElement, DateCirclePointProps>(
   ({ day, title, selected, style, onClick }, ref) => {
-    const theme = useAppSelector((state) => state.theme);
+    const { background, primary, primary50 } = useAppSelector((state) => state.theme);
     const [titleVisible, setTitleVisible] = useState(false);
 
     useEffect(() => {
@@ -92,7 +94,8 @@ export const DateCirclePoint = forwardRef<HTMLDivElement, DateCirclePointProps>(
     return (
       <SHoverPoint
         ref={ref}
-        $bg={theme.background}
+        $bg={background}
+        $p50={primary50}
         $selected={selected}
         style={style}
         onClick={(e) => {
@@ -100,7 +103,7 @@ export const DateCirclePoint = forwardRef<HTMLDivElement, DateCirclePointProps>(
           onClick();
         }}
       >
-        <SPoint $p={theme.primary}>
+        <SPoint $p={primary}>
           <SDay>{day}</SDay>
         </SPoint>
         {selected && <STitle $visible={titleVisible}>{title}</STitle>}

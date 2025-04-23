@@ -28,6 +28,10 @@ const SWrapper = styled.div<{ $accent: string; $accent10: string; $light: string
     cursor: grabbing;
   }
 
+  .swiper {
+    margin: 0 120px;
+  }
+
   .swiper-button-prev,
   .swiper-button-next {
     background-color: ${({ $light }) => $light};
@@ -36,15 +40,21 @@ const SWrapper = styled.div<{ $accent: string; $accent10: string; $light: string
     border-radius: 50%;
     box-shadow: 0px 0px 10px ${({ $accent10 }) => $accent10};
 
+    &.swiper-button-disabled {
+      display: none;
+    }
+
     &::after {
       color: ${({ $accent }) => $accent};
       font-size: 12px;
       font-weight: bold;
     }
   }
-  .swiper-button-next {
-  }
   .swiper-button-prev {
+    left: 40px;
+  }
+  .swiper-button-next {
+    right: 40px;
   }
 `;
 
@@ -53,15 +63,18 @@ export const YearBlockList: FC<YearBlockListProps> = ({ years }) => {
 
   return (
     <SWrapper $accent={accent} $accent10={accent10} $light={light}>
+      <button className="swiper-button-prev" />
       <Swiper
         spaceBetween={80}
         slidesPerView={3}
         freeMode={true}
         mousewheel={true}
         keyboard={{ enabled: true }}
-        navigation={true}
+        navigation={{
+          prevEl: '.swiper-button-prev',
+          nextEl: '.swiper-button-next',
+        }}
         modules={[FreeMode, Mousewheel, Keyboard, Navigation]}
-        style={{ padding: '0 80px' }}
       >
         {years.map((year) => (
           <SwiperSlide key={`year-${year.year}`}>
@@ -69,6 +82,7 @@ export const YearBlockList: FC<YearBlockListProps> = ({ years }) => {
           </SwiperSlide>
         ))}
       </Swiper>
+      <button className="swiper-button-next" />
     </SWrapper>
   );
 };

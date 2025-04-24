@@ -40,6 +40,7 @@ const SCircleCss = css<{ $primary: string }>`
   }
 
   &::after {
+    z-index: -1;
     width: 250vw;
   }
 `;

@@ -20,6 +20,7 @@ interface YearBlockListProps {
 }
 
 const SWrapper = styled.div<{
+  $background: string;
   $primary: string;
   $accent: string;
   $accent10: string;
@@ -74,8 +75,8 @@ const SWrapper = styled.div<{
     }
 
     .swiper-slide {
-      width: 166px !important;
       height: 105px !important;
+      position: relative;
     }
 
     .swiper-pagination {
@@ -85,7 +86,7 @@ const SWrapper = styled.div<{
 `;
 
 export const YearBlockList: FC<YearBlockListProps> = ({ years }) => {
-  const { primary, accent, accent10, light } = useAppSelector((state) => state.theme);
+  const { background, primary, accent, accent10, light } = useAppSelector((state) => state.theme);
   const adaptive = useAppSelector((state) => state.adaptive);
   const isMobile: boolean = useMediaQuery(`(max-width: ${adaptive.$mobile})`);
   let modules = [FreeMode, Mousewheel, Keyboard];
@@ -97,6 +98,7 @@ export const YearBlockList: FC<YearBlockListProps> = ({ years }) => {
 
   return (
     <SWrapper
+      $background={background}
       $primary={primary}
       $accent={accent}
       $accent10={accent10}
@@ -106,7 +108,7 @@ export const YearBlockList: FC<YearBlockListProps> = ({ years }) => {
       {!isMobile && <button className="swiper-button-prev" id="sl1-sbp" />}
       <Swiper
         spaceBetween={isMobile ? 25 : 80}
-        slidesPerView={3}
+        slidesPerView={isMobile ? 2 : 3}
         freeMode={true}
         mousewheel={true}
         keyboard={{ enabled: true }}
@@ -125,7 +127,7 @@ export const YearBlockList: FC<YearBlockListProps> = ({ years }) => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="swiper-pagination"></div>
+      {isMobile && <div className="swiper-pagination" />}
       {!isMobile && <button className="swiper-button-next" id="sl1-sbn" />}
     </SWrapper>
   );

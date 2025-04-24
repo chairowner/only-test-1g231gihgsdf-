@@ -96,12 +96,19 @@ const STop = styled.div<{ $isMobile: boolean }>`
         `}
 `;
 
+const SHR = styled.div<{ $primary: string }>`
+  width: 100%;
+  height: 1px;
+  background-color: ${({ $primary }) => $primary};
+  margin-bottom: 20px;
+`;
+
 interface YearDateBlockProps {
   initialState: DateYearsInfo[];
 }
 
 export const YearDateBlock: FC<YearDateBlockProps> = ({ initialState }) => {
-  const { primary10 } = useAppSelector((state) => state.theme);
+  const { primary10, primary20 } = useAppSelector((state) => state.theme);
   const adaptive = useAppSelector((state) => state.adaptive);
 
   const [dateYears, setDateYears] = useState<DateYearsInfo[]>(initialState);
@@ -134,6 +141,7 @@ export const YearDateBlock: FC<YearDateBlockProps> = ({ initialState }) => {
         <Heading title="Исторические даты" />
       </STop>
       <SDates $isMobile={isMobile}>
+        {isMobile && <SHR $primary={primary20} />}
         <SDateSelectorWrapper $isMobile={isMobile}>
           <DateSelector dateYears={dateYears} changeDate={changeDate} />
         </SDateSelectorWrapper>

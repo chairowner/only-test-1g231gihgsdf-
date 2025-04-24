@@ -95,6 +95,7 @@ export const initialDataYears: DateYearsInfo[] = [
     selected: false,
     day: 4,
     month: 6,
+    title: 'Sport',
     years: [
       {
         year: 1999,

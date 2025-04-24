@@ -19,6 +19,7 @@ const SContainer = styled.div<{ $mobile: string }>`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  z-index: 10;
 
   @media (max-width: ${({ $mobile }) => $mobile}) {
     gap: 5px;

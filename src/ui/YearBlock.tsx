@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useAppSelector } from '../lib/hooks';
 
@@ -7,10 +7,20 @@ interface YearBlockProps {
   description: string;
 }
 
-const SContainer = styled.div<{ $accent: string; $primary: string; $mobile: string }>`
+const SContainer = styled.div<{
+  $accent: string;
+  $primary: string;
+  $mobile: string;
+  $visible: boolean;
+}>`
   display: flex;
   flex-direction: column;
   gap: 15px;
+  opacity: ${({ $visible }) => ($visible ? 1 : 0)};
+  transform: translateY(${({ $visible }) => ($visible ? '0px' : '10px')});
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
 
   strong {
     font-family: 'Bebas Neue', cursive;
@@ -38,7 +48,6 @@ const SContainer = styled.div<{ $accent: string; $primary: string; $mobile: stri
     span {
       font-size: 14px;
       line-height: 145%;
-      /* height: 80px; */
     }
   }
 `;
@@ -46,9 +55,18 @@ const SContainer = styled.div<{ $accent: string; $primary: string; $mobile: stri
 export const YearBlock: FC<YearBlockProps> = ({ year, description }) => {
   const { primary, accent } = useAppSelector((state) => state.theme);
   const adaptive = useAppSelector((state) => state.adaptive);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setVisible(true), 50); // задержка нужна для корректной анимации
+    return () => {
+      setVisible(false);
+      clearTimeout(timeout);
+    };
+  }, []);
 
   return (
-    <SContainer $accent={accent} $primary={primary} $mobile={adaptive.$mobile}>
+    <SContainer $accent={accent} $primary={primary} $mobile={adaptive.$mobile} $visible={visible}>
       <strong>{year}</strong>
       <span>{description}</span>
     </SContainer>

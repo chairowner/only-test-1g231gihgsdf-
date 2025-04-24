@@ -103,6 +103,27 @@ const SHR = styled.div<{ $primary: string }>`
   margin-bottom: 20px;
 `;
 
+const SFlexColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  b {
+    font-size: 18px;
+    font-weight: bold;
+  }
+`;
+
+const SAnimatedTitle = styled.b<{ $visible: boolean }>`
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+  opacity: ${({ $visible }) => ($visible ? 1 : 0)};
+  transform: translateY(${({ $visible }) => ($visible ? '0' : '10px')});
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+`;
+
 interface YearDateBlockProps {
   initialState: DateYearsInfo[];
 }
@@ -141,7 +162,12 @@ export const YearDateBlock: FC<YearDateBlockProps> = ({ initialState }) => {
         <Heading title="Исторические даты" />
       </STop>
       <SDates $isMobile={isMobile}>
-        {isMobile && <SHR $primary={primary20} />}
+        {isMobile && (
+          <SFlexColumn>
+            <b>{dateYears.find((date) => date.selected)?.title}</b>
+            <SHR $primary={primary20} />
+          </SFlexColumn>
+        )}
         <SDateSelectorWrapper $isMobile={isMobile}>
           <DateSelector dateYears={dateYears} changeDate={changeDate} />
         </SDateSelectorWrapper>

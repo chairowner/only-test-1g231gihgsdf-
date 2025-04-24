@@ -1,14 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export interface Adaptive {
-  mobile: string;
+  $mobile: string;
+  $tablet: string;
 }
+
+const initialState: Adaptive = {
+  $mobile: '768px',
+  $tablet: '1490px',
+};
 
 export const adaptiveSlice = createSlice({
   name: 'adaptive',
-  initialState: {
-    mobile: '430px',
-  },
+  initialState,
   reducers: undefined,
 });
 

@@ -1,4 +1,4 @@
-import { CSSProperties, FC, forwardRef, use, useEffect, useState } from 'react';
+import { CSSProperties, forwardRef, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { useAppSelector } from '../lib/hooks';
 import { DateYearsInfo } from '../types';

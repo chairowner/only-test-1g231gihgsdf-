@@ -1,15 +1,24 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import gsap from 'gsap';
+import { useAppSelector } from '../lib/hooks';
 
-interface SYearProps {
+const SYear = styled.span<{
   $color: string;
-}
-
-const SYear = styled.span<SYearProps>`
+  $tablet: string;
+  $mobile: string;
+}>`
   font-size: 200px;
   font-weight: bold;
   color: ${({ $color }) => $color};
+
+  @media (max-width: ${({ $tablet }) => $tablet}) {
+    font-size: 120px;
+  }
+
+  @media (max-width: ${({ $mobile }) => $mobile}) {
+    font-size: 56px;
+  }
 `;
 
 interface BigYearProps {
@@ -18,6 +27,8 @@ interface BigYearProps {
 }
 
 export const BigYear: FC<BigYearProps> = ({ color, year }) => {
+  const adaptive = useAppSelector((state) => state.adaptive);
+
   const [displayedYear, setDisplayedYear] = useState(year ?? 0);
   const yearRef = useRef<number | undefined>(year ?? 0);
   const ref = useRef<HTMLSpanElement>(null);
@@ -47,7 +58,13 @@ export const BigYear: FC<BigYearProps> = ({ color, year }) => {
   }, [year]);
 
   return (
-    <SYear ref={ref} $color={color} style={{ display: 'none' }}>
+    <SYear
+      ref={ref}
+      $color={color}
+      $tablet={adaptive.$tablet}
+      $mobile={adaptive.$mobile}
+      style={{ display: 'none' }}
+    >
       {displayedYear}
     </SYear>
   );

@@ -1,7 +1,7 @@
 import { combineSlices, configureStore } from '@reduxjs/toolkit';
-import { themeSlice } from './features';
+import { adaptiveSlice, themeSlice } from './features';
 
-const reducer = combineSlices(themeSlice);
+const reducer = combineSlices(themeSlice, adaptiveSlice);
 
 export const store = configureStore({
   reducer,

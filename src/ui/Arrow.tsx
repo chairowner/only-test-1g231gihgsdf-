@@ -9,7 +9,12 @@ interface ArrowProps {
   onClick?: () => void;
 }
 
-const SArrow = styled.button<{ $primary: string; $primary50: string; $light: string }>`
+const SArrow = styled.button<{
+  $primary: string;
+  $primary50: string;
+  $light: string;
+  $mobile: string;
+}>`
   z-index: auto;
   position: relative;
   right: auto;
@@ -33,6 +38,15 @@ const SArrow = styled.button<{ $primary: string; $primary50: string; $light: str
     font-size: 14px;
     font-weight: bold;
   }
+
+  @media (max-width: ${({ $mobile }) => $mobile}) {
+    width: 25px;
+    height: 25px;
+
+    &::after {
+      font-size: 8px;
+    }
+  }
 `;
 
 const getClassName = ({ side, disabled }: ArrowProps): string => {
@@ -43,9 +57,11 @@ const getClassName = ({ side, disabled }: ArrowProps): string => {
 
 export const Arrow: FC<ArrowProps> = (props) => {
   const { primary, primary50, light } = useAppSelector((state) => state.theme);
+  const adaptive = useAppSelector((state) => state.adaptive);
   return (
     <SArrow
       className={getClassName(props)}
+      $mobile={adaptive.$mobile}
       $primary={primary}
       $primary50={primary50}
       $light={light}

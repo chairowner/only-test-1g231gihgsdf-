@@ -1,19 +1,28 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import styled from 'styled-components';
 import { DateYearsInfo } from '../types';
 import { Arrow } from '../ui';
+import { useAppSelector } from '../lib/hooks';
 
-const SArrows = styled.div`
+const SArrows = styled.div<{ $mobile: string }>`
   display: flex;
   gap: 20px;
   height: 50px;
   margin-top: 25px;
+
+  @media (max-width: ${({ $mobile }) => $mobile}) {
+    gap: 8px;
+  }
 `;
-const SContainer = styled.div`
+const SContainer = styled.div<{ $mobile: string }>`
   position: relative;
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  @media (max-width: ${({ $mobile }) => $mobile}) {
+    gap: 5px;
+  }
 `;
 const SDateText = styled.span`
   font-size: 14px;
@@ -27,10 +36,13 @@ interface DateSelectorProps {
 const printZeros = (num: number): string => num.toString().padStart(2, '0');
 
 export const DateSelector: FC<DateSelectorProps> = ({ dateYears, changeDate }) => {
+  const adaptive = useAppSelector((state) => state.adaptive);
+
   if (!dateYears.length) return;
 
   const dateYear = dateYears.find((date) => date.selected)!;
   if (!dateYear) return;
+
   const firstDate: DateYearsInfo = dateYears[0];
   const lastDate: DateYearsInfo = dateYears[dateYears.length - 1];
 
@@ -44,11 +56,11 @@ export const DateSelector: FC<DateSelectorProps> = ({ dateYears, changeDate }) =
   };
 
   return (
-    <SContainer>
+    <SContainer $mobile={adaptive.$mobile}>
       <SDateText>
         {printZeros(dateYear.day)}/{printZeros(dateYear.month)}
       </SDateText>
-      <SArrows>
+      <SArrows $mobile={adaptive.$mobile}>
         <Arrow
           side="left"
           disabled={firstDate.day === dateYear.day}
